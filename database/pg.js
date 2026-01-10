@@ -1,5 +1,7 @@
-import {Pool} from "pg";
+import {Pool, types} from "pg";
 import jwt from "jsonwebtoken";
+
+types.setTypeParser(1082, val => val);
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,

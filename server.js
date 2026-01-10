@@ -1,6 +1,7 @@
 import "./config/env.js"
 import express from "express";
-import router from "./routers/auth-router.js";
+import authRouter from "./routers/auth-router.js";
+import childrenRouter from "./routers/children-router.js";
 import pool from "./database/pg.js";
 import cors from "cors";
 
@@ -11,7 +12,8 @@ app.use(cors({
     origin: "http://localhost:5173",
 }));
 app.use(express.json());
-app.use("/api/auth", router);
+app.use("/api/auth", authRouter);
+app.use("/api/children", childrenRouter);
 
 app.get("/", (req, res) => {
     res.status(200).json({msg: "Welcome"});
