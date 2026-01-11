@@ -42,7 +42,7 @@ const removeChild = async (req, res) => {
     try {
         if (!req.user.isadmin) return res.status(400).json({msg: "Bad Request"});
         const {id} = req.body;
-        const result = await pool.query("DELETE FROM CHILDREN WHERE ID = $1 RETURNING *", [id]);
+        const result = await pool.query("DELETE FROM CHILDREN WHERE ID = $1", [id]);
         return res.status(200).json({msg: "Child removed"});
     } catch (error) {
         console.log(error);
