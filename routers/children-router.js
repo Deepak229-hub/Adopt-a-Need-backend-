@@ -8,6 +8,8 @@ router.route("/").get(verify, controller.getChildren);
 
 router.route("/addchild").post(verify, controller.createChild);
 
-router.route("/updatechildren").post(verify, controller.updateChildren);
+router.route("/updatechild").post(verify, controller.updateChild);
+
+router.route("/removechild").post(verify, controller.removeChild);
 
 export default router;

@@ -26,9 +26,9 @@ const createChild = async (req, res) => {
     }
 };
 
-const updateChildren = async (req, res) => {
+const updateChild = async (req, res) => {
     try {
-        if (!req.user.isadmin) return res.status.json({msg: "Bad Request"});
+        if (!req.user.isadmin) return res.status(400).json({msg: "Bad Request"});
         const {id, name, dob, gender, status} = req.body;
         const result = await pool.query("UPDATE CHILDREN SET NAME = $1, DOB = $2, GENDER = $3, STATUS = $4 WHERE ID = $5 RETURNING *", [name, dob, gender, status, id]);
         return res.status(200).json({msg: result.rows[0]});
@@ -38,4 +38,16 @@ const updateChildren = async (req, res) => {
     }
 }
 
-export default {getChildren, createChild, updateChildren};
+const removeChild = async (req, res) => {
+    try {
+        if (!req.user.isadmin) return res.status(400).json({msg: "Bad Request"});
+        const {id} = req.body;
+        const result = await pool.query("DELETE FROM CHILDREN WHERE ID = $1 RETURNING *", [id]);
+        return res.status(200).json({msg: "Child removed"});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({msg: "An error occured"});
+    }
+}
+
+export default {getChildren, createChild, updateChild, removeChild};

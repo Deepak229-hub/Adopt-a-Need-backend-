@@ -9,8 +9,13 @@ const verify = async (req, res, next) => {
     const jwtToken = token.replace("Bearer ", "");
     console.log(jwtToken);
 
-    const isVerified = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY);
+    let isVerified;
+    try {
+    isVerified = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY);
     console.log(isVerified);
+    } catch (error) {
+        return res.status(400).json({msg: "Invalid or Expired Token"});
+    }
     
     let userData = await pool.query("SELECT id, username, email, phone, isAdmin FROM USERS WHERE EMAIL = $1", [isVerified.email]);
     userData = userData.rows[0]
