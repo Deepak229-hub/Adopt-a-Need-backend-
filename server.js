@@ -4,6 +4,7 @@ import authRouter from "./routers/auth-router.js";
 import childrenRouter from "./routers/children-router.js";
 import pool from "./database/pg.js";
 import cors from "cors";
+import volunteerRouter from "./routers/volunteer-router.js";
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -14,6 +15,7 @@ app.use(cors({
 app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/children", childrenRouter);
+app.use("/api/volunteer", volunteerRouter);
 
 app.get("/", (req, res) => {
     res.status(200).json({msg: "Welcome"});
